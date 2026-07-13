@@ -1,0 +1,5 @@
+Q1: The call instruction saves the return address in ra. Function prologues save ra and the previous frame pointer on the stack, so walking saved frame pointers reveals caller return addresses.
+
+Q2: Backtrace starts from s0/fp, prints the saved return address at fp-8, then follows the previous frame pointer at fp-16 until it leaves the current kernel stack page.
+
+Q3: The alarm implementation saves the full trapframe before redirecting epc to the user handler. sigreturn restores that saved trapframe and clears the active flag to prevent reentrant handlers.
