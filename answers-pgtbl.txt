@@ -1,0 +1,5 @@
+Q1: To speed up getpid(), xv6 maps one read-only user page at USYSCALL. The kernel fills struct usyscall with the process pid, and user code reads it directly without trapping.
+
+Q2: vmprint walks the three-level Sv39 page table recursively. Each valid PTE is printed with indentation that reflects the level; non-leaf valid PTEs are followed into the child page table.
+
+Q3: pgaccess inspects each page's PTE_A bit, builds a bit mask for pages accessed since the last query, clears the PTE_A bit, and copies the mask back to user space.
