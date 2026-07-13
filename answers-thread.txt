@@ -1,0 +1,5 @@
+Q1: thread_switch saves ra, sp, and all callee-saved registers from the current user thread context, then restores those registers from the next thread context.
+
+Q2: The hash table uses one pthread mutex per bucket, which removes races on linked-list insertion while still allowing parallel puts to different buckets.
+
+Q3: The barrier records the current round, counts arrivals, broadcasts when all threads arrive, and makes waiting threads loop on the round value to tolerate spurious wakeups.
