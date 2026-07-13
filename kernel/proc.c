@@ -160,6 +160,7 @@ freeproc(struct proc *p)
   p->pid = 0;
   p->parent = 0;
   p->name[0] = 0;
+  memset(p->vma, 0, sizeof(p->vma));
   p->chan = 0;
   p->killed = 0;
   p->xstate = 0;
@@ -299,6 +300,12 @@ fork(void)
   for(i = 0; i < NOFILE; i++)
     if(p->ofile[i])
       np->ofile[i] = filedup(p->ofile[i]);
+  for(i = 0; i < NVMA; i++){
+    if(p->vma[i].used){
+      np->vma[i] = p->vma[i];
+      filedup(np->vma[i].file);
+    }
+  }
   np->cwd = idup(p->cwd);
 
   safestrcpy(np->name, p->name, sizeof(p->name));
@@ -343,6 +350,8 @@ exit(int status)
 
   if(p == initproc)
     panic("init exiting");
+
+  munmap_all(p);
 
   // Close all open files.
   for(int fd = 0; fd < NOFILE; fd++){
