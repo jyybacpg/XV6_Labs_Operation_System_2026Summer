@@ -23,7 +23,7 @@
 #include "fs.h"
 #include "buf.h"
 
-#define NBUCKET 13
+#define NBUCKET 31
 
 struct bucket {
   struct spinlock lock;
@@ -48,7 +48,7 @@ binit(void)
   struct buf *b;
   struct bucket *bk;
 
-  initlock(&bcache.evict_lock, "bcache_evict");
+  initlock(&bcache.evict_lock, "evict");
 
   for(int i = 0; i < NBUCKET; i++){
     bk = &bcache.bucket[i];
